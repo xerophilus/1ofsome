@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>1ofsome Cards</title>
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/favicon.png">
+<meta name="description" content="Hand-cut 3D layered football cards, sealed in a one touch. Shop finished cards or request a custom.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+</head>
+<body>
+<style>
+/* Layout: one narrow column built for phones (QR scans), widening to a two-column hero and grid on desktop.
+Look: graphite card-shop counter, cutting-mat green, silver-foil display type. */
+:root {
+--bg: #eceff1;
+--surface: #ffffff;
+--ink: #14171b;
+--muted: #5a636b;
+--line: #cfd5da;
+--mat: #1e5b48;
+--mat-ink: #ffffff;
+--mat-grid: rgba(30, 91, 72, .09);
+--foil-a: #8a939b;
+--foil-b: #f4f6f8;
+--gold: #b8892b;
+--shadow: 0 18px 40px -18px rgba(20, 23, 27, .45);
+--display: "Big Shoulders Display", "Oswald", "Arial Narrow", Impact, sans-serif;
+--body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+--mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+--radius: 10px;
+--err: #ff9b8f;
+--logo-l: block;
+--logo-d: none;
+}
+@media (prefers-color-scheme: dark) {
+:root:not([data-theme="light"]) {
+--bg: #111417; --surface: #1a1f23; --ink: #e8ebee; --muted: #9aa4ad; --line: #2c343a;
+--mat: #3f9c7c; --mat-ink: #08130f; --mat-grid: rgba(63, 156, 124, .10);
+--foil-a: #9aa3ab; --foil-b: #ffffff; --gold: #d6a84a;
+--shadow: 0 18px 40px -18px rgba(0, 0, 0, .8); --err: #b3261e; --logo-l: none; --logo-d: block;
+color-scheme: dark;
+}
+}
+:root[data-theme="dark"] {
+--bg: #111417; --surface: #1a1f23; --ink: #e8ebee; --muted: #9aa4ad; --line: #2c343a;
+--mat: #3f9c7c; --mat-ink: #08130f; --mat-grid: rgba(63, 156, 124, .10);
+--foil-a: #9aa3ab; --foil-b: #ffffff; --gold: #d6a84a;
+--shadow: 0 18px 40px -18px rgba(0, 0, 0, .8); --err: #b3261e; --logo-l: none; --logo-d: block;
+color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; }
+a { color: inherit; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); line-height: 1; text-wrap: balance; margin: 0; letter-spacing: .01em; }
+h2 { font-size: clamp(2.1rem, 6vw, 3rem); font-weight: 800; text-transform: uppercase; }
+.eyebrow { font-family: var(--mono); font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mat); }
+.foil {
+background: linear-gradient(100deg, var(--foil-a) 0%, var(--foil-b) 22%, var(--foil-a) 40%, var(--foil-b) 62%, var(--foil-a) 82%);
+-webkit-background-clip: text; background-clip: text; color: transparent;
+}
+section { padding-block: 56px; }
+:focus-visible { outline: 3px solid var(--mat); outline-offset: 3px; border-radius: 4px; }
+/* Preview ribbon */
+.ribbon { background: var(--ink); color: var(--bg); font-family: var(--mono); font-size: .75rem; }
+.ribbon .wrap { padding-block: 8px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+.ribbon a { color: inherit; opacity: .85; }
+.ribbon b { font-weight: 500; }
+/* Header */
+header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 16px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { height: 46px; width: auto; display: var(--logo-l); }
+.brand img.logo-d { display: var(--logo-d); }
+.brand small { font-family: var(--mono); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); line-height: 1.4; border-left: 1px solid var(--line); padding-left: 12px; }
+.foot-logo { height: 34px; width: auto; display: var(--logo-l); margin-bottom: 12px; }
+.foot-logo.logo-d { display: var(--logo-d); }
+.logo-d { filter: invert(1) hue-rotate(180deg); }
+nav.top { display: flex; gap: 18px; font-weight: 600; font-size: .95rem; }
+nav.top a { text-decoration: none; color: var(--muted); }
+nav.top a:hover { color: var(--ink); }
+@media (max-width: 520px) { nav.top { display: none; } }
+/* Dealer banner */
+.dealer { background: var(--mat); color: var(--mat-ink); }
+.dealer .wrap { padding-block: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.dealer p { margin: 0; flex: 1 1 260px; min-width: 0; }
+.code { font-family: var(--mono); font-weight: 500; font-size: 1.05rem; letter-spacing: .06em; background: rgba(255,255,255,.16); border: 1px dashed currentColor; padding: 6px 12px; border-radius: 6px; user-select: all; }
+.dealer button { font: inherit; font-weight: 600; font-size: .9rem; background: var(--mat-ink); color: var(--mat); border: 0; border-radius: 6px; padding: 8px 14px; cursor: pointer; }
+/* Hero */
+.hero { background-image: linear-gradient(var(--mat-grid) 1px, transparent 1px), linear-gradient(90deg, var(--mat-grid) 1px, transparent 1px); background-size: 28px 28px; }
+.hero .wrap { display: grid; gap: 36px; padding-block: 32px 64px; align-items: center; }
+@media (min-width: 820px) { .hero .wrap { grid-template-columns: 1.05fr .95fr; padding-block: 56px 80px; } }
+.hero h1 { font-size: clamp(3rem, 12vw, 5.6rem); font-weight: 900; text-transform: uppercase; line-height: .9; }
+.hero h1 span { display: block; }
+.hero p.lede { font-size: 1.15rem; color: var(--muted); max-width: 34ch; margin: 18px 0 26px; }
+.ctas { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 8px; font-weight: 600; text-decoration: none; border: 2px solid var(--ink); font-size: 1rem; cursor: pointer; font-family: var(--body); }
+.btn.primary { background: var(--ink); color: var(--bg); }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn[aria-disabled="true"] { opacity: .5; cursor: default; }
+.specline { margin-top: 22px; font-family: var(--mono); font-size: .78rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.stage { perspective: 1100px; display: grid; place-items: center; }
+.slab {
+width: min(78vw, 340px); aspect-ratio: 3 / 4; max-width: 100%;
+border-radius: 14px; padding: 12px; position: relative;
+background: linear-gradient(140deg, rgba(255,255,255,.55), rgba(255,255,255,.12) 45%, rgba(255,255,255,.4));
+border: 1px solid var(--line); box-shadow: var(--shadow);
+transform: rotateX(var(--rx, 6deg)) rotateY(var(--ry, -10deg)); transition: transform .25s ease-out;
+transform-style: preserve-3d;
+}
+.slab img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; display: block; }
+.slab::after { content: ""; position: absolute; inset: 12px; border-radius: 8px; pointer-events: none;
+background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.28) 45%, transparent 60%); mix-blend-mode: screen; }
+.slab .tag { position: absolute; left: -8px; bottom: 22px; background: var(--gold); color: #1b1407; font-family: var(--mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; transform: translateZ(30px); }
+/* Layers */
+.layers .wrap { display: grid; gap: 32px; align-items: center; }
+@media (min-width: 820px) { .layers .wrap { grid-template-columns: .9fr 1.1fr; } }
+.explode { height: 360px; perspective: 1000px; display: grid; place-items: center; overflow: hidden; }
+.stack { width: 150px; height: 200px; position: relative; transform-style: preserve-3d; transform: rotateX(58deg) rotateZ(-34deg); }
+.ly { position: absolute; inset: 0; border-radius: 6px; transform: translateZ(calc(var(--i) * var(--gap, 34px))); transition: transform .9s cubic-bezier(.2,.7,.2,1); }
+.stack.closed .ly { --gap: 3px; }
+.ly.base { background: url("img/prototype.webp") center / cover; filter: saturate(.6) brightness(.9); box-shadow: 0 0 0 1px var(--line); }
+.ly.border { border: 14px solid transparent; border-image: linear-gradient(135deg, var(--foil-a), var(--foil-b), var(--foil-a)) 1; box-shadow: 0 0 0 1px rgba(0,0,0,.25), inset 0 0 0 1px rgba(0,0,0,.25); }
+.ly.player { inset: 24px 22px 42px; background: url("img/prototype.webp") 58% 40% / 230% auto; clip-path: polygon(30% 0, 70% 0, 82% 28%, 76% 62%, 92% 100%, 10% 100%, 22% 60%, 18% 26%); filter: drop-shadow(0 0 1px #000); }
+.ly.name { inset: auto 10px 14px 34px; height: 26px; background: var(--ink); color: var(--bg); font-family: var(--display); font-weight: 800; font-size: .8rem; letter-spacing: .06em; display: grid; place-items: center; border-radius: 3px; border: 1px solid var(--foil-a); }
+.legend { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 14px; counter-reset: layer; }
+.legend li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; counter-increment: layer; }
+.legend li::before { content: counter(layer); font-family: var(--mono); font-size: .8rem; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid var(--mat); color: var(--mat); }
+.legend b { display: block; font-weight: 600; }
+.legend span { color: var(--muted); font-size: .95rem; }
+/* Finishes */
+.finishes { background: var(--surface); border-block: 1px solid var(--line); }
+.opts { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-top: 26px; }
+@media (min-width: 700px) { .opts { grid-template-columns: repeat(2, 1fr); } }
+.opt { background: var(--surface); padding: 20px; display: grid; grid-template-columns: 46px 1fr; gap: 14px; align-items: start; min-width: 0; }
+.sw { width: 46px; height: 46px; border-radius: 8px; border: 1px solid var(--line); }
+.sw.edge { background: #0d0d0d; }
+.sw.silver { background: linear-gradient(135deg, #8a939b, #f4f6f8 45%, #8a939b); }
+.sw.team { background: conic-gradient(#006778 0 25%, #d7a22a 0 50%, #241773 0 75%, #a71930 0); }
+.sw.slab1 { background: linear-gradient(160deg, rgba(160,170,180,.5), rgba(255,255,255,.2)); box-shadow: inset 0 0 0 5px rgba(140,150,160,.45); }
+.opt h3 { font-family: var(--body); font-weight: 600; font-size: 1.05rem; line-height: 1.3; }
+.opt p { margin: 4px 0 0; color: var(--muted); font-size: .95rem; }
+.pill { display: inline-block; font-family: var(--mono); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; padding: 2px 7px; border-radius: 99px; border: 1px solid var(--mat); color: var(--mat); margin-left: 6px; vertical-align: 2px; }
+/* Pricing */
+.tiers { list-style: none; padding: 0; margin: 26px 0 0; border-top: 2px solid var(--ink); }
+.tiers li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.tiers .t { font-family: var(--display); font-weight: 800; font-size: 1.6rem; text-transform: uppercase; line-height: 1.1; }
+.tiers .p { font-family: var(--mono); font-weight: 500; font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+.tiers .d { grid-column: 1 / -1; color: var(--muted); font-size: .95rem; }
+.tiers .p s { color: var(--muted); font-size: .85rem; margin-right: 8px; }
+.pricenote { margin-top: 14px; font-size: .9rem; color: var(--muted); }
+/* Gallery */
+.gal { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 26px; }
+@media (min-width: 820px) { .gal { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.gal figure { margin: 0; min-width: 0; }
+.gal .ph { aspect-ratio: 3 / 4; max-width: 100%; border-radius: 8px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); display: grid; place-items: center; text-align: center; padding: 10px; }
+.gal .ph img { width: 100%; height: 100%; object-fit: cover; }
+.gal .ph:has(img) { padding: 0; }
+.gal .empty { border-style: dashed; color: var(--muted); font-family: var(--mono); font-size: .75rem; letter-spacing: .06em; background-image: linear-gradient(var(--mat-grid) 1px, transparent 1px), linear-gradient(90deg, var(--mat-grid) 1px, transparent 1px); background-size: 14px 14px; }
+.gal figcaption { font-size: .85rem; color: var(--muted); margin-top: 6px; }
+.gal figcaption b { color: var(--ink); font-weight: 600; }
+/* Process */
+.steps { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 14px; }
+@media (min-width: 820px) { .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.steps li { border-top: 3px solid var(--ink); padding-top: 12px; min-width: 0; }
+.steps .n { font-family: var(--mono); font-size: .75rem; color: var(--mat); letter-spacing: .1em; }
+.steps h3 { font-size: 1.6rem; font-weight: 800; text-transform: uppercase; margin: 4px 0 6px; }
+.steps p { margin: 0; color: var(--muted); font-size: .95rem; }
+/* Custom order */
+.custom { background: var(--ink); color: var(--bg); }
+.custom .eyebrow { color: var(--gold); }
+.custom .wrap { display: grid; gap: 28px; }
+@media (min-width: 860px) { .custom .wrap { grid-template-columns: .8fr 1.2fr; } }
+.custom p.sub { color: color-mix(in srgb, var(--bg) 72%, transparent); max-width: 40ch; }
+form { display: grid; gap: 14px; min-width: 0; }
+.row2 { display: grid; gap: 14px; }
+@media (min-width: 560px) { .row2 { grid-template-columns: 1fr 1fr; } }
+label { display: grid; gap: 5px; font-weight: 500; font-size: .92rem; min-width: 0; }
+input, select, textarea { font: inherit; font-size: 16px; padding: 11px 12px; border-radius: 7px; border: 1px solid color-mix(in srgb, var(--bg) 30%, transparent); background: color-mix(in srgb, var(--bg) 8%, var(--ink)); color: var(--bg); width: 100%; min-width: 0; }
+textarea { min-height: 96px; resize: vertical; }
+fieldset { border: 1px solid color-mix(in srgb, var(--bg) 30%, transparent); border-radius: 8px; padding: 12px 14px; margin: 0; min-width: 0; }
+legend { font-weight: 500; font-size: .92rem; padding: 0 6px; }
+.checks { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.checks label { display: flex; align-items: center; gap: 8px; font-weight: 400; }
+.checks input { width: 18px; height: 18px; accent-color: var(--gold); }
+.custom .btn.primary { background: var(--gold); border-color: var(--gold); color: #1b1407; }
+.note { font-family: var(--mono); font-size: .75rem; color: color-mix(in srgb, var(--bg) 60%, transparent); }
+.done { border: 1px solid var(--gold); border-radius: 8px; padding: 16px; }
+.done h3 { font-family: var(--body); font-size: 1.1rem; font-weight: 600; }
+.done pre { white-space: pre-wrap; font-family: var(--mono); font-size: .8rem; margin: 10px 0 0; color: color-mix(in srgb, var(--bg) 80%, transparent); }
+.err { color: var(--err); font-size: .9rem; margin: 0; }
+/* Buy + footer */
+.buy .wrap { display: grid; gap: 18px; }
+.stores { display: grid; gap: 12px; }
+@media (min-width: 640px) { .stores { grid-template-columns: 1fr 1fr; } }
+.store { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; display: grid; gap: 10px; min-width: 0; }
+.store h3 { font-size: 1.8rem; font-weight: 800; text-transform: uppercase; }
+.store p { margin: 0; color: var(--muted); }
+footer { border-top: 1px solid var(--line); padding-block: 28px 40px; color: var(--muted); font-size: .85rem; }
+footer p { margin: 0 0 6px; max-width: 70ch; }
+@media (prefers-reduced-motion: reduce) {
+.slab, .ly { transition: none; }
+}
+</style>
+<header class="site">
+<div class="wrap">
+<a class="brand" href="#top"><img class="logo-l" src="img/logo.webp" alt="1ofsome" width="720" height="381"><img class="logo-d" src="img/logo.webp" alt="1ofsome" width="720" height="381"><small data-tagline>3D layered<br>football cards</small></a>
+<nav class="top" aria-label="Sections">
+<a href="#layers">The layers</a>
+<a href="#pricing">Pricing</a>
+<a href="#gallery">Gallery</a>
+<a href="#custom">Custom</a>
+</nav>
+</div>
+</header>
+<div class="dealer" id="dealerBar" hidden>
+<div class="wrap">
+<p>You came from <b id="dealerName">a dealer</b>. Use this code at checkout for <b id="dealerOff">a discount</b>.</p>
+<span class="code" id="dealerCode">CODE</span>
+<button type="button" id="copyCode">Copy code</button>
+</div>
+</div>
+<main id="top">
+<section class="hero" style="padding-block:0">
+<div class="wrap">
+<div>
+<p class="eyebrow">Hand-cut · layered · sealed</p>
+<h1><span>Your card,</span><span class="foil">four layers</span><span>deep.</span></h1>
+<p class="lede">We take several copies of the same flagship base card, cut each one by hand, and stack them so the player jumps off the card.</p>
+<div class="ctas">
+<a class="btn primary" data-store="ebay" href="#buy">Shop finished cards</a>
+<a class="btn ghost" href="#custom">Request a custom</a>
+</div>
+<div class="specline"><span>Base: Topps flagship</span><span>Edges: inked black</span><span>Holder: 130pt one touch</span></div>
+</div>
+<div class="stage">
+<div class="slab" id="slab">
+<img src="img/prototype.webp" alt="Prototype 3D layered Trevor Lawrence card, with the player and name plate raised above the border" width="330" height="440">
+<span class="tag">Prototype</span>
+</div>
+</div>
+</div>
+</section>
+<section class="layers" id="layers">
+<div class="wrap">
+<div class="explode" aria-hidden="true">
+<div class="stack closed" id="stack">
+<div class="ly base" style="--i:0"></div>
+<div class="ly border" style="--i:1"></div>
+<div class="ly player" style="--i:2"></div>
+<div class="ly name" style="--i:3">PLAYER NAME</div>
+</div>
+</div>
+<div>
+<p class="eyebrow">How the depth works</p>
+<h2>The layers, bottom to top</h2>
+<ol class="legend">
+<li><div><b>Base card</b><span>The untouched card, so the full design still shows underneath.</span></div></li>
+<li><div><b>Border frame</b><span>The border cut free and lifted, with the inside edge in silver or team color.</span></div></li>
+<li><div><b>Player</b><span>The player cut out along the uniform, with small detail cuts for the arms, ball and cleats.</span></div></li>
+<li><div><b>Name plate</b><span>The player's name raised on top, the highest point on the card.</span></div></li>
+</ol>
+</div>
+</div>
+</section>
+<section class="finishes" id="finishes">
+<div class="wrap">
+<p class="eyebrow">Finishes</p>
+<h2>Pick your details</h2>
+<div class="opts">
+<div class="opt"><div class="sw edge"></div><div><h3>Black inked edges<span class="pill">Every card</span></h3><p>Every cut edge is colored black so the white card stock never shows.</p></div></div>
+<div class="opt"><div class="sw silver"></div><div><h3>Silver inner border<span class="pill">Standard</span></h3><p>A clean silver line inside the border that matches any team.</p></div></div>
+<div class="opt"><div class="sw team"></div><div><h3>Team-color inner border<span class="pill">Upgrade</span></h3><p>The inside of the border painted in your team's colors.</p></div></div>
+<div class="opt"><div class="sw slab1"></div><div><h3>Sealed in a 130pt one touch<span class="pill">Every card</span></h3><p>Thick enough for every layer, magnetic, and ready for a stand.</p></div></div>
+</div>
+</div>
+</section>
+<section id="pricing">
+<div class="wrap">
+<p class="eyebrow">Pricing</p>
+<h2>Every card, one price list</h2>
+<ul class="tiers" id="tiers"></ul>
+<p class="pricenote" id="priceNote">Each card ships sealed in a 130pt one touch.</p>
+</div>
+</section>
+<section id="gallery">
+<div class="wrap">
+<p class="eyebrow">Gallery</p>
+<h2>Off the cutting mat</h2>
+<div class="gal">
+<figure><div class="ph"><img src="img/prototype.webp" alt="Trevor Lawrence prototype, front" loading="lazy" width="330" height="440"></div><figcaption><b>Trevor Lawrence</b> · prototype</figcaption></figure>
+<figure><div class="ph empty">Next scan</div><figcaption>Coming soon</figcaption></figure>
+<figure><div class="ph empty">Next scan</div><figcaption>Coming soon</figcaption></figure>
+<figure><div class="ph empty">Parallel back</div><figcaption>Coming soon</figcaption></figure>
+</div>
+</div>
+</section>
+<section id="process" style="padding-top:0">
+<div class="wrap">
+<p class="eyebrow">How it's made</p>
+<h2>Four steps, one card</h2>
+<ol class="steps">
+<li><div class="n">STEP 1</div><h3>Pull</h3><p>Several copies of the same base card, so every layer matches exactly.</p></li>
+<li><div class="n">STEP 2</div><h3>Cut</h3><p>Each copy is cut to one layer: border, player, details, name.</p></li>
+<li><div class="n">STEP 3</div><h3>Ink &amp; stack</h3><p>Edges inked black, inner border finished, then the layers are stacked with spacers.</p></li>
+<li><div class="n">STEP 4</div><h3>Seal</h3><p>Dropped into a 130pt one touch so the depth stays put.</p></li>
+</ol>
+</div>
+</section>
+<section class="custom" id="custom">
+<div class="wrap">
+<div>
+<p class="eyebrow">Custom orders</p>
+<h2>Your player, your colors</h2>
+<p class="sub">Tell us the player and the card. We'll reply with a price and timing before anything is cut. Send your own card or we can source the copies.</p>
+</div>
+<div>
+<div class="done" id="customOff" hidden>
+<h3>Custom orders open soon</h3>
+<p style="margin:6px 0 0">For now, message the shop on eBay or Etsy with the player and the card you want, and we'll reply with a price.</p>
+</div>
+<form id="customForm" novalidate>
+<div class="row2">
+<label for="f-name">Your name<input id="f-name" name="name" autocomplete="name" required></label>
+<label for="f-email">Email<input id="f-email" name="email" type="email" autocomplete="email" required></label>
+</div>
+<div class="row2">
+<label for="f-player">Player<input id="f-player" name="player" placeholder="e.g. Lamar Jackson" required></label>
+<label for="f-card">Card (year, set, number)<input id="f-card" name="card" placeholder="e.g. 2025 Topps #1"></label>
+</div>
+<label for="f-tier">Card type<select id="f-tier" name="tier"></select></label>
+<div class="row2">
+<label for="f-border">Inner border
+<select id="f-border" name="border">
+<option>Silver (standard)</option>
+<option>Team colors (upgrade)</option>
+<option>Not sure yet</option>
+</select>
+</label>
+<label for="f-source">Base cards
+<select id="f-source" name="source">
+<option>Source the copies for me</option>
+<option>I'll send my own cards</option>
+</select>
+</label>
+</div>
+<fieldset>
+<legend>Extras</legend>
+<div class="checks">
+<label for="f-patch"><input type="checkbox" id="f-patch" name="extras" value="Patch under the team letters"> Patch under the team letters</label>
+<label for="f-parallel"><input type="checkbox" id="f-parallel" name="extras" value="Parallel on the back"> Parallel on the back</label>
+<label for="f-stand"><input type="checkbox" id="f-stand" name="extras" value="Card stand"> Card stand</label>
+</div>
+</fieldset>
+<label for="f-notes">Anything else<textarea id="f-notes" name="notes" placeholder="Gift deadline, a specific parallel, a 1/1 idea"></textarea></label>
+<label for="f-ref">Dealer code (optional)<input id="f-ref" name="ref" placeholder="From the card's QR code"></label>
+<p class="err" id="formErr" hidden></p>
+<div class="ctas"><button class="btn primary" type="submit">Send request</button></div>
+<p class="note" id="previewNote">Preview: this form doesn't send anything yet.</p>
+</form>
+<div class="done" id="done" hidden>
+<h3 id="doneTitle">Request received</h3>
+<p id="doneText" style="margin:6px 0 0"></p>
+<pre id="doneSummary"></pre>
+<div class="ctas" style="margin-top:12px"><button class="btn ghost" type="button" id="again" style="color:var(--bg);border-color:var(--bg)">Start another</button></div>
+</div>
+</div>
+</div>
+</section>
+<section class="buy" id="buy">
+<div class="wrap">
+<div><p class="eyebrow">Where to buy</p><h2>Finished cards</h2></div>
+<div class="stores">
+<div class="store"><h3>eBay</h3><p>Ready-made cards, listed as they come off the mat.</p><a class="btn primary" data-store-link="ebay" href="#">Shop on eBay</a></div>
+<div class="store"><h3>Etsy</h3><p>Customs and made-to-order cards.</p><a class="btn ghost" data-store-link="etsy" href="#">Shop on Etsy</a></div>
+</div>
+<p class="note" style="color:var(--muted)" id="codeReminder" hidden>Your dealer code <b id="codeReminderCode"></b> works on both.</p>
+</div>
+</section>
+</main>
+<footer>
+<div class="wrap">
+<img class="foot-logo logo-l" src="img/logo.webp" alt="1ofsome" width="720" height="381" loading="lazy"><img class="foot-logo logo-d" src="img/logo.webp" alt="" width="720" height="381" loading="lazy">
+<p><span data-shop-name-plain>1ofsome</span> makes hand-cut custom art from officially licensed trading cards. Each piece is an altered card and is sold as art, not as an original graded card.</p>
+<p>Not affiliated with or endorsed by the NFL, the NFLPA, Topps or any team. Player names and card designs belong to their owners.</p>
+</div>
+</footer>
+<script src="dealers.js"></script>
+<script>
+(function () {
+var C = window.SHOP_CONFIG || { dealers: {}, refDays: 60, preview: true };
+var KEY = "shop_ref";
+var $ = function (id) { return document.getElementById(id); };
+// Name and tagline from config
+document.querySelectorAll("[data-shop-name]").forEach(function (el) { el.textContent = C.shopName || "Shop"; });
+document.querySelectorAll("[data-mark]").forEach(function (el) { el.textContent = C.mark || ""; });
+// Price list and the form's card-type menu
+var prices = C.prices || [], tiers = $("tiers"), sel = $("f-tier");
+function money(n) { var r = Math.round(n * 100) / 100; return "$" + (r % 1 ? r.toFixed(2) : String(r)); }
+function renderPrices(pct) {
+tiers.innerHTML = "";
+prices.forEach(function (t) {
+var li = document.createElement("li");
+var name = document.createElement("span"); name.className = "t"; name.textContent = t.name;
+var price = document.createElement("span"); price.className = "p";
+if (pct) { var was = document.createElement("s"); was.textContent = money(t.price); price.appendChild(was); price.appendChild(document.createTextNode(money(t.price * (1 - pct / 100)))); }
+else price.textContent = money(t.price);
+var d = document.createElement("span"); d.className = "d"; d.textContent = t.note || "";
+li.appendChild(name); li.appendChild(price); li.appendChild(d); tiers.appendChild(li);
+});
+}
+prices.forEach(function (t) { var o = document.createElement("option"); o.textContent = t.name + " (" + money(t.price) + ")"; sel.appendChild(o); });
+var other = document.createElement("option"); other.textContent = "Not sure yet"; sel.appendChild(other);
+renderPrices(0);
+document.querySelectorAll("[data-shop-name-plain]").forEach(function (el) { el.textContent = C.shopName || "This shop"; });
+if (!C.preview) { var r = $("ribbon"); if (r) r.hidden = true; $("previewNote").hidden = true; }
+if (C.customFormEnabled === false) { $("customForm").hidden = true; $("customOff").hidden = false; }
+// Store links
+document.querySelectorAll("[data-store-link]").forEach(function (a) {
+var url = C[a.getAttribute("data-store-link") + "Url"];
+if (url) { a.href = url; a.target = "_blank"; a.rel = "noopener"; }
+else { a.setAttribute("aria-disabled", "true"); a.textContent += " · coming soon"; a.addEventListener("click", function (e) { e.preventDefault(); }); }
+});
+// Dealer attribution: ?ref=CODE on the live site, #ref-code in the preview
+function findDealer(code) {
+if (!code) return null;
+var k = String(code).trim().toUpperCase();
+return C.dealers && C.dealers[k] ? { key: k, d: C.dealers[k] } : null;
+}
+function readIncoming() {
+var q = null;
+try { q = new URLSearchParams(location.search).get("ref"); } catch (e) {}
+if (!q) { var m = /^#ref-([a-z0-9-]+)$/i.exec(location.hash || ""); if (m) q = m[1]; }
+return q;
+}
+function save(key) {
+var rec = JSON.stringify({ key: key, at: Date.now() });
+try { localStorage.setItem(KEY, rec); } catch (e) {}
+try { document.cookie = KEY + "=" + encodeURIComponent(key) + "; max-age=" + (C.refDays * 86400) + "; path=/; SameSite=Lax"; } catch (e) {}
+}
+function load() {
+try {
+var rec = JSON.parse(localStorage.getItem(KEY) || "null");
+if (rec && Date.now() - rec.at < C.refDays * 86400000) return rec.key;
+} catch (e) {}
+try { var m = /(?:^|; )shop_ref=([^;]+)/.exec(document.cookie); if (m) return decodeURIComponent(m[1]); } catch (e) {}
+return null;
+}
+function clear() {
+try { localStorage.removeItem(KEY); } catch (e) {}
+try { document.cookie = KEY + "=; max-age=0; path=/"; } catch (e) {}
+}
+function apply() {
+var incoming = findDealer(readIncoming());
+if (incoming) save(incoming.key);
+var hit = incoming || findDealer(load());
+var bar = $("dealerBar");
+var pctMatch = /(\d+(?:\.\d+)?)\s*%/.exec(C.buyerDiscountText || "");
+if (!hit) { bar.hidden = true; $("codeReminder").hidden = true; renderPrices(0); $("priceNote").textContent = "Each card ships sealed in a 130pt one touch."; return; }
+$("dealerName").textContent = hit.d.name;
+$("dealerOff").textContent = hit.d.discountText || C.buyerDiscountText || "a discount";
+renderPrices(pctMatch ? parseFloat(pctMatch[1]) : 0);
+$("priceNote").textContent = "Prices shown with your " + (C.buyerDiscountText || "dealer") + " code. Each card ships sealed in a 130pt one touch.";
+$("dealerCode").textContent = hit.d.discountCode;
+$("codeReminderCode").textContent = hit.d.discountCode;
+$("codeReminder").hidden = false;
+bar.hidden = false;
+var f = $("f-ref"); if (f && !f.value) f.value = hit.key;
+}
+apply();
+window.addEventListener("hashchange", apply);
+var cl = $("clearRef");
+if (cl) cl.addEventListener("click", function (e) { e.preventDefault(); clear(); $("f-ref").value = ""; history.replaceState(null, "", location.pathname + location.search); apply(); });
+$("copyCode").addEventListener("click", function () {
+var t = $("dealerCode").textContent, b = this;
+function ok() { b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy code"; }, 1600); }
+function fallback() { var r = document.createRange(); r.selectNodeContents($("dealerCode")); var s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Selected"; }
+try { navigator.clipboard.writeText(t).then(ok, fallback); } catch (e) { fallback(); }
+});
+// Custom order form
+var form = $("customForm");
+form.addEventListener("submit", function (e) {
+e.preventDefault();
+var err = $("formErr"), need = [];
+if (!form.name.value.trim()) need.push("your name");
+if (!/^\S+@\S+\.\S+$/.test(form.email.value.trim())) need.push("an email we can reply to");
+if (!form.player.value.trim()) need.push("the player");
+if (need.length) { err.textContent = "Add " + need.join(", ") + " so we can quote it."; err.hidden = false; return; }
+err.hidden = true;
+var extras = Array.prototype.filter.call(form.querySelectorAll("input[name=extras]"), function (c) { return c.checked; }).map(function (c) { return c.value; });
+var dealer = findDealer(form.ref.value);
+var lines = [
+"Name: " + form.name.value.trim(),
+"Email: " + form.email.value.trim(),
+"Player: " + form.player.value.trim(),
+"Card: " + (form.card.value.trim() || "not given"),
+"Card type: " + form.tier.value,
+"Inner border: " + form.border.value,
+"Base cards: " + form.source.value,
+"Extras: " + (extras.join(", ") || "none"),
+"Dealer: " + (dealer ? dealer.d.name + " (" + dealer.key + ")" : (form.ref.value.trim() || "none")),
+"Notes: " + (form.notes.value.trim() || "none")
+];
+$("doneSummary").textContent = lines.join("\n");
+if (C.preview) {
+$("doneTitle").textContent = "Preview only: nothing was sent";
+$("doneText").textContent = "On the live site this request lands in the shop's inbox. Here is what it would contain.";
+} else {
+$("doneTitle").textContent = "Request received";
+$("doneText").textContent = "We'll email you a price and timing before anything is cut.";
+}
+form.hidden = true; $("done").hidden = false;
+});
+$("again").addEventListener("click", function () { form.reset(); apply(); $("done").hidden = true; form.hidden = false; });
+// Tilt the hero card toward the pointer, and open the exploded stack
+var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+var stack = $("stack");
+if (reduce) { stack.style.transition = "none"; stack.classList.remove("closed"); }
+else { requestAnimationFrame(function () { setTimeout(function () { stack.classList.remove("closed"); }, 250); }); }
+var slab = $("slab");
+if (!reduce && slab) {
+slab.addEventListener("pointermove", function (e) {
+var r = slab.getBoundingClientRect();
+var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+slab.style.setProperty("--ry", (x * 22) + "deg"); slab.style.setProperty("--rx", (-y * 18) + "deg");
+});
+slab.addEventListener("pointerleave", function () { slab.style.removeProperty("--ry"); slab.style.removeProperty("--rx"); });
+}
+})();
+</script>
+</body>
+</html>
