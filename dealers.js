@@ -1,6 +1,6 @@
 // Shop settings. Edit this file to change the name, prices, links and dealers.
 // A dealer's QR code points to:  https://YOUR-DOMAIN/?ref=CODE
-// (In the Claude preview, links use #ref-code instead, because the preview can't read ?ref=.)
+
 window.SHOP_CONFIG = {
   shopName: "1ofsome",
   mark: "1/s",
