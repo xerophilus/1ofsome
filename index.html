@@ -197,6 +197,18 @@ legend { font-weight: 500; font-size: .92rem; padding: 0 6px; }
 .buy .wrap { display: grid; gap: 18px; }
 .stores { display: grid; gap: 12px; }
 @media (min-width: 640px) { .stores { grid-template-columns: 1fr 1fr; } }
+.shop { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (min-width: 820px) { .shop { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.shop .card { margin: 0; min-width: 0; display: grid; gap: 8px; align-content: start; }
+.shop .card .ph { aspect-ratio: 3 / 4; border-radius: 8px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); }
+.shop .card .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.shop .card h3 { font-size: 1.35rem; font-weight: 800; text-transform: uppercase; line-height: 1.05; overflow-wrap: anywhere; }
+.shop .card .meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 10px; font-size: .88rem; color: var(--muted); }
+.shop .card .meta .p { font-family: var(--mono); font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
+.shop .card .meta s { color: var(--muted); margin-right: 6px; font-weight: 400; }
+.shop .card .btn { min-height: 44px; padding: 0 14px; width: 100%; }
+.shop-note { margin: 0; font-size: .9rem; color: var(--muted); }
+.also { font-family: var(--display); font-size: 1.5rem; font-weight: 800; text-transform: uppercase; margin-top: 10px; }
 .store { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; display: grid; gap: 10px; min-width: 0; }
 .store h3 { font-size: 1.8rem; font-weight: 800; text-transform: uppercase; }
 .store p { margin: 0; color: var(--muted); }
@@ -374,11 +386,16 @@ footer p { margin: 0 0 6px; max-width: 70ch; }
 <section class="buy" id="buy">
 <div class="wrap">
 <div><p class="eyebrow">Where to buy</p><h2>Finished cards</h2></div>
+<div id="shop" hidden>
+<div class="shop" id="shopGrid"></div>
+<p class="shop-note" id="shopNote">Checkout is by Stripe. Each card is one of a kind and ships sealed in a 130pt one touch.</p>
+</div>
+<h3 class="also" id="alsoOn" hidden>Also on eBay and Etsy</h3>
 <div class="stores">
 <div class="store"><h3>eBay</h3><p>Ready-made cards, listed as they come off the mat.</p><a class="btn primary" data-store-link="ebay" href="https://www.ebay.com/usr/bwilliamp" target="_blank" rel="noopener">Shop on eBay</a></div>
 <div class="store"><h3>Etsy</h3><p>Customs and made-to-order cards.</p><a class="btn ghost" data-store-link="etsy" href="https://keelandcompass.etsy.com" target="_blank" rel="noopener">Shop on Etsy</a></div>
 </div>
-<p class="note" style="color:var(--muted)" id="codeReminder" hidden>Your dealer code <b id="codeReminderCode"></b> works on both.</p>
+<p class="note" style="color:var(--muted)" id="codeReminder" hidden>Your dealer code <b id="codeReminderCode"></b><span id="codeReminderTail"> works on both.</span></p>
 </div>
 </section>
 </main>
@@ -419,6 +436,46 @@ renderPrices(0);
 document.querySelectorAll("[data-shop-name-plain]").forEach(function (el) { el.textContent = C.shopName || "This shop"; });
 if (!C.preview) { var r = $("ribbon"); if (r) r.hidden = true; $("previewNote").hidden = true; }
 if (C.customFormEnabled === false) { $("customForm").hidden = true; $("customOff").hidden = false; }
+// Shop: one Stripe Payment Link per card (see cards in dealers.js)
+var activeDealer = null;
+var cards = (C.checkoutEnabled && C.cards) || [];
+function realLink(u) { return /^https:\/\/buy\.stripe\.com\/[A-Za-z0-9_]+$/.test(u || "") && !/REPLACE/i.test(u); }
+function buyUrl(link, hit) {
+var u = new URL(link);
+if (hit) {
+u.searchParams.set("prefilled_promo_code", hit.d.discountCode);
+u.searchParams.set("client_reference_id", "dealer_" + hit.key);
+}
+return u.toString();
+}
+function renderShop() {
+var grid = $("shopGrid");
+if (!cards.length) { $("shop").hidden = true; $("alsoOn").hidden = true; return; }
+var pctMatch = /(\d+(?:\.\d+)?)\s*%/.exec(C.buyerDiscountText || "");
+var pct = activeDealer && pctMatch ? parseFloat(pctMatch[1]) : 0;
+grid.textContent = "";
+cards.forEach(function (c) {
+var fig = document.createElement("figure"); fig.className = "card";
+var ph = document.createElement("div"); ph.className = "ph";
+if (c.img) { var im = document.createElement("img"); im.src = c.img; im.alt = (c.player || "Card") + ", " + (c.tier || "") + " 3D card"; im.loading = "lazy"; ph.appendChild(im); }
+var h = document.createElement("h3"); h.textContent = c.player || "1ofsome card";
+var meta = document.createElement("div"); meta.className = "meta";
+var tier = document.createElement("span"); tier.textContent = c.tier || "";
+var pr = document.createElement("span"); pr.className = "p";
+if (typeof c.price === "number") {
+if (pct) { var was = document.createElement("s"); was.textContent = money(c.price); pr.appendChild(was); pr.appendChild(document.createTextNode(money(c.price * (1 - pct / 100)))); }
+else pr.textContent = money(c.price);
+}
+meta.appendChild(tier); meta.appendChild(pr);
+var a = document.createElement("a"); a.className = "btn primary";
+if (c.sold) { a.textContent = "Sold"; a.setAttribute("aria-disabled", "true"); a.className = "btn ghost"; }
+else if (!realLink(c.link)) { a.textContent = "Coming soon"; a.setAttribute("aria-disabled", "true"); a.className = "btn ghost"; }
+else { a.textContent = "Buy"; a.href = buyUrl(c.link, activeDealer); a.rel = "noopener"; a.setAttribute("aria-label", "Buy " + (c.player || "this card") + " " + (c.tier || "")); }
+fig.appendChild(ph); fig.appendChild(h); fig.appendChild(meta); fig.appendChild(a);
+grid.appendChild(fig);
+});
+$("shop").hidden = false; $("alsoOn").hidden = false;
+}
 // Store links
 document.querySelectorAll("[data-store-link]").forEach(function (a) {
 var url = C[a.getAttribute("data-store-link") + "Url"];
@@ -460,7 +517,8 @@ if (incoming) save(incoming.key);
 var hit = incoming || findDealer(load());
 var bar = $("dealerBar");
 var pctMatch = /(\d+(?:\.\d+)?)\s*%/.exec(C.buyerDiscountText || "");
-if (!hit) { bar.hidden = true; $("codeReminder").hidden = true; renderPrices(0); $("priceNote").textContent = "Each card ships sealed in a 130pt one touch."; return; }
+activeDealer = hit;
+if (!hit) { renderShop(); bar.hidden = true; $("codeReminder").hidden = true; renderPrices(0); $("priceNote").textContent = "Each card ships sealed in a 130pt one touch."; return; }
 $("dealerName").textContent = hit.d.name;
 $("dealerOff").textContent = hit.d.discountText || C.buyerDiscountText || "a discount";
 renderPrices(pctMatch ? parseFloat(pctMatch[1]) : 0);
@@ -469,6 +527,8 @@ $("dealerCode").textContent = hit.d.discountCode;
 $("codeReminderCode").textContent = hit.d.discountCode;
 $("codeReminder").hidden = false;
 bar.hidden = false;
+$("codeReminderTail").textContent = cards.length ? " is filled in when you tap Buy here, and works on eBay and Etsy too." : " works on both.";
+renderShop();
 var f = $("f-ref"); if (f && !f.value) f.value = hit.key;
 }
 apply();

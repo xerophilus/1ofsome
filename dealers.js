@@ -30,13 +30,28 @@ window.SHOP_CONFIG = {
   // false = hide the custom-order form until it has somewhere to send requests.
   customFormEnabled: false,
 
+  // Stripe checkout. Each finished card gets its own Stripe Payment Link,
+  // set in Stripe to "Limit the number of payments" = 1, with promotion codes
+  // allowed. Keep this false until the first real link is in.
+  // A card whose link is still a placeholder shows "Coming soon".
+  // After a card sells, set sold: true so its button reads Sold.
+  checkoutEnabled: false,
+  cards: [
+    { id: "lawrence-base-01", player: "Trevor Lawrence", tier: "Base", price: 25,
+      img: "img/prototype.webp", link: "https://buy.stripe.com/REPLACE_ME_1", sold: false },
+    { id: "example-holo-01", player: "Player name", tier: "Holo", price: 30,
+      img: "", link: "https://buy.stripe.com/REPLACE_ME_2", sold: false },
+  ],
+
   // Buyer discount shown to anyone who arrives from a dealer's QR code.
   buyerDiscountText: "10% off",
   // What each dealer earns per sale (for your records; never shown on the page).
   dealerKickback: 5,
 
   // One entry per dealer. The key is what goes in ?ref=, case doesn't matter.
-  // Create each discountCode as a 10% coupon on eBay and Etsy too.
+  // Each discountCode must also exist in Stripe as a promotion code on the
+  // 10% coupon; the Buy button fills it in at checkout. Matching 10% coupons
+  // on eBay and Etsy are optional.
   // These 20 codes are preloaded for the Dec 19 card show. Until a code is
   // handed to a real dealer, its banner says "You came from a 1ofsome dealer."
   // When you assign one, swap DEALER for their name, e.g.
