@@ -1,6 +1,8 @@
 // Shop settings. Edit this file to change the name, prices, links and dealers.
 // A dealer's QR code points to:  https://YOUR-DOMAIN/?ref=CODE
 
+var DEALER = "a 1ofsome dealer";
+
 window.SHOP_CONFIG = {
   shopName: "1ofsome",
   mark: "1/s",
@@ -35,8 +37,30 @@ window.SHOP_CONFIG = {
 
   // One entry per dealer. The key is what goes in ?ref=, case doesn't matter.
   // Create each discountCode as a 10% coupon on eBay and Etsy too.
+  // These 20 codes are preloaded for the Dec 19 card show. Until a code is
+  // handed to a real dealer, its banner says "You came from a 1ofsome dealer."
+  // When you assign one, swap DEALER for their name, e.g.
+  //   PRISM: { name: "Harbor Card Co.", discountCode: "PRISM" },
   dealers: {
-    // Add real dealers here, e.g.
-    // HARBOR: { name: "Harbor Card Co.", discountCode: "HARBOR10" },
+    GREENCRACKLE:   { name: DEALER, discountCode: "GREENCRACKLE" },
+    SUPERFRACTOR:   { name: DEALER, discountCode: "SUPERFRACTOR" },
+    GOLDREFRACTOR:  { name: DEALER, discountCode: "GOLDREFRACTOR" },
+    XFRACTOR:       { name: DEALER, discountCode: "XFRACTOR" },
+    ATOMIC:         { name: DEALER, discountCode: "ATOMIC" },
+    GOLDWAVE:       { name: DEALER, discountCode: "GOLDWAVE" },
+    ORANGEWAVE:     { name: DEALER, discountCode: "ORANGEWAVE" },
+    REDLAVA:        { name: DEALER, discountCode: "REDLAVA" },
+    BLACKREFRACTOR: { name: DEALER, discountCode: "BLACKREFRACTOR" },
+    PINKREFRACTOR:  { name: DEALER, discountCode: "PINKREFRACTOR" },
+    AQUAREFRACTOR:  { name: DEALER, discountCode: "AQUAREFRACTOR" },
+    PURPLESPECKLE:  { name: DEALER, discountCode: "PURPLESPECKLE" },
+    NEGATIVE:       { name: DEALER, discountCode: "NEGATIVE" },
+    PRISM:          { name: DEALER, discountCode: "PRISM" },
+    SEPIA:          { name: DEALER, discountCode: "SEPIA" },
+    MINIDIAMOND:    { name: DEALER, discountCode: "MINIDIAMOND" },
+    RAYWAVE:        { name: DEALER, discountCode: "RAYWAVE" },
+    RAINBOWFOIL:    { name: DEALER, discountCode: "RAINBOWFOIL" },
+    VINTAGESTOCK:   { name: DEALER, discountCode: "VINTAGESTOCK" },
+    PRINTINGPLATE:  { name: DEALER, discountCode: "PRINTINGPLATE" },
   }
 };
