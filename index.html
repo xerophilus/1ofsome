@@ -207,6 +207,7 @@ legend { font-weight: 500; font-size: .92rem; padding: 0 6px; }
 .shop .card .meta .p { font-family: var(--mono); font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
 .shop .card .meta s { color: var(--muted); margin-right: 6px; font-weight: 400; }
 .shop .card .btn { min-height: 44px; padding: 0 14px; width: 100%; }
+.shop .would { font-family: var(--mono); font-size: .68rem; color: var(--muted); overflow-wrap: anywhere; }
 .shop-note { margin: 0; font-size: .9rem; color: var(--muted); }
 .also { font-family: var(--display); font-size: 1.5rem; font-weight: 800; text-transform: uppercase; margin-top: 10px; }
 .store { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; display: grid; gap: 10px; min-width: 0; }
@@ -438,7 +439,10 @@ if (!C.preview) { var r = $("ribbon"); if (r) r.hidden = true; $("previewNote").
 if (C.customFormEnabled === false) { $("customForm").hidden = true; $("customOff").hidden = false; }
 // Shop: one Stripe Payment Link per card (see cards in dealers.js)
 var activeDealer = null;
-var cards = (C.checkoutEnabled && C.cards) || [];
+// Add ?shop=preview to any page address to see the shop before checkout is switched on.
+var shopPreview = false;
+try { shopPreview = new URLSearchParams(location.search).get("shop") === "preview"; } catch (e) {}
+var cards = ((C.checkoutEnabled || shopPreview) && C.cards) || [];
 function realLink(u) { return /^https:\/\/buy\.stripe\.com\/[A-Za-z0-9_]+$/.test(u || "") && !/REPLACE/i.test(u); }
 function buyUrl(link, hit) {
 var u = new URL(link);
@@ -469,7 +473,8 @@ else pr.textContent = money(c.price);
 meta.appendChild(tier); meta.appendChild(pr);
 var a = document.createElement("a"); a.className = "btn primary";
 if (c.sold) { a.textContent = "Sold"; a.setAttribute("aria-disabled", "true"); a.className = "btn ghost"; }
-else if (!realLink(c.link)) { a.textContent = "Coming soon"; a.setAttribute("aria-disabled", "true"); a.className = "btn ghost"; }
+else if (!realLink(c.link)) { a.textContent = "Coming soon"; a.setAttribute("aria-disabled", "true"); a.className = "btn ghost";
+if (shopPreview && c.link) { var w = document.createElement("small"); w.className = "would"; w.textContent = "Buy would open: " + buyUrl(c.link, activeDealer).replace(/^https:\/\//, ""); fig.appendChild(ph); fig.appendChild(h); fig.appendChild(meta); fig.appendChild(a); fig.appendChild(w); grid.appendChild(fig); return; } }
 else { a.textContent = "Buy"; a.href = buyUrl(c.link, activeDealer); a.rel = "noopener"; a.setAttribute("aria-label", "Buy " + (c.player || "this card") + " " + (c.tier || "")); }
 fig.appendChild(ph); fig.appendChild(h); fig.appendChild(meta); fig.appendChild(a);
 grid.appendChild(fig);
